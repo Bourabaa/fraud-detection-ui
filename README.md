@@ -1,6 +1,38 @@
-# Getting Started with Create React App
+# Fraud Detection UI - React Interface
+
+A modern, enterprise-grade React interface for AWS SageMaker fraud detection predictions.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Features
+
+- 🎨 Modern, vibrant UI with gradient design
+- 📊 Real-time fraud detection predictions
+- 📁 CSV batch processing
+- 🔄 Manual transaction input
+- 📈 Confidence scoring and visualization
+- ☁️ AWS SageMaker integration
+
+## Deployment
+
+This application is configured for deployment to **AWS Amplify**.
+
+### Quick Deployment Guide
+
+1. **Deploy Backend First**
+   - Ensure your backend server is deployed and accessible
+   - Note the backend URL (e.g., `https://your-backend.elasticbeanstalk.com`)
+
+2. **Deploy to AWS Amplify**
+   - See detailed instructions in [AMPLIFY_DEPLOYMENT.md](./AMPLIFY_DEPLOYMENT.md)
+   - Quick checklist: [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md)
+
+3. **Set Environment Variable**
+   - In Amplify Console, add: `REACT_APP_API_URL` = your backend URL
+
+### Local Development
+
+For local development, the app defaults to `http://localhost:5000` for the backend API.
 
 ## Available Scripts
 
