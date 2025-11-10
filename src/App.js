@@ -3,7 +3,7 @@ import { AlertCircle, CheckCircle, Upload, Loader, AlertTriangle } from 'lucide-
 
 function FraudDetectionInterface() {
   // Get backend URL from environment variable, fallback to localhost for development
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://fraud-backend-env.eba-dc83bbc8.us-east-1.elasticbeanstalk.com';
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://fraud-backend-env.eba-dc83bbc8.us-east-1.elasticbeanstalk.com';
 
   const [endpointName, setEndpointName] = useState('fraud-detection-model-2025-11-07-18-43-51');
   const [awsRegion, setAwsRegion] = useState('us-east-1');
