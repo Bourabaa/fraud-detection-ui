@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { AlertCircle, CheckCircle, Upload, Loader, AlertTriangle } from 'lucide-react';
 
 function FraudDetectionInterface() {
-  // Get backend URL from environment variable, fallback to localhost for development
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://fraud-backend-env.eba-dc83bbc8.us-east-1.elasticbeanstalk.com';
+  // Get backend URL from environment variable
+  // IMPORTANT: For production (Amplify), you MUST use HTTPS to avoid mixed content errors
+  // If your Elastic Beanstalk doesn't support HTTPS yet, see fraud-detection-backend/HTTPS_SETUP.md
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://fraud-backend-env.eba-3kqp2kpi.us-east-1.elasticbeanstalk.com';
   console.log('🔍 API_BASE_URL:', API_BASE_URL);
+
   const [endpointName, setEndpointName] = useState('fraud-detection-model-2025-11-07-18-43-51');
   const [awsRegion, setAwsRegion] = useState('us-east-1');
   const [inputMethod, setInputMethod] = useState('manual'); // 'manual' or 'csv'
@@ -38,13 +41,17 @@ function FraudDetectionInterface() {
       }
 
       // Call backend API
-      const response = await fetch(`${API_BASE_URL}/api/predict`, {
+      const apiUrl = `${API_BASE_URL}/api/predict`;
+      console.log('Calling API:', apiUrl);
+      console.log('Endpoint name:', endpointName.trim());
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          endpointName: endpointName,
+          endpointName: endpointName.trim(),
           features: values
         })
       });
@@ -94,7 +101,9 @@ function FraudDetectionInterface() {
       });
 
     } catch (err) {
-      setError(err.message || `Failed to get prediction. Make sure the backend server is running on ${API_BASE_URL}`);
+      console.error('Prediction error:', err);
+      const errorMessage = err.message || 'Failed to fetch';
+      setError(`${errorMessage}. API URL: ${API_BASE_URL}. Check: 1) Backend is running, 2) REACT_APP_API_URL is set in Amplify, 3) CORS is configured.`);
     } finally {
       setLoading(false);
     }
@@ -199,13 +208,14 @@ function FraudDetectionInterface() {
         const features = csvRows[i];
         
         // Call backend API for each row
-        const response = await fetch(`${API_BASE_URL}/api/predict`, {
+        const apiUrl = `${API_BASE_URL}/api/predict`;
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            endpointName: endpointName,
+            endpointName: endpointName.trim(),
             features: features
           })
         });
@@ -262,7 +272,9 @@ function FraudDetectionInterface() {
       }
 
     } catch (err) {
-      setError(err.message || `Failed to get predictions. Make sure the backend server is running on ${API_BASE_URL}`);
+      console.error('CSV prediction error:', err);
+      const errorMessage = err.message || 'Failed to fetch';
+      setError(`${errorMessage}. API URL: ${API_BASE_URL}. Check: 1) Backend is running, 2) REACT_APP_API_URL is set in Amplify, 3) CORS is configured.`);
     } finally {
       setLoading(false);
     }
