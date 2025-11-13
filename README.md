@@ -1,4 +1,4 @@
-# Fraud Detection System
+# Fraud Detection System - Live on AWS
 A comprehensive, cloud-native fraud detection system built on AWS infrastructure, featuring real-time machine learning predictions, a modern React UI, and full monitoring capabilities.
 
 📋 **Table of Contents**
@@ -143,6 +143,9 @@ Real-time monitoring and observability are provided via **custom Grafana dashboa
 - Auto-refresh every 5 seconds
 
 ---
+**Working Application Screenshot:**
+![App in Action](assets/app.jpg)
+![App in Action](assets/app_result.jpg)
 
 ## 💻 Local Development Setup
 
